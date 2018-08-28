@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #js-imgShow {
+      width: 400px;
+      height: 400px;
+      border: 1px solid red;
+      position: relative;
+    }
+    #js-imgShow .hidden {
+      display: none;
+    }
+    .js-imgShow-content {
+      width: 100%;
+      height: 100%;
+    }
+    .js-imgShow-box {
+      width: 100%;
+      height: 100%;
+    }
+    .js-imgShow-btnBox {
+      zoom: 1;
+      clear: both;
+    }
+    .js-imgShow-btn {
+      float: left;
+      width: 40%;
+      margin-top: 10px;
+    }
+    .js-imgShow-btn:first-child {
+      border: 1px solid #71B3FF;
+      border-radius: 4px;
+      background: #71B3FF;
+      text-align: center;
+      line-height: 30px;
+      color: #fff;
+      cursor: pointer;
+      margin-right: 10%;
+    }
+    .js-imgShow-btn:last-child {
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+      background: #DCDCDC;
+      text-align: center;
+      line-height: 30px;
+      color: #fff;
+      cursor: pointer;
+    }
+    #js-imgShow-img {
+      max-width: 400px;
+    }
+    [data-name = 'js-imgShow-txt'] {
+      margin: 0;
+      text-align: center;
+    }
+    [data-name = 'js-imgShow-preview'] {
+      position: absolute;
+      right: -150px;
+      top: 0;
+    }
+    #js-imgShow-canvas {
+      border: 1px dotted #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="js-imgShow">
+    <div
+      class="js-imgShow-content"
+    >
+        <div class="js-imgShow-box">
+          <canvas  id = 'js-imgShow-img' class='hidden'></canvas>
+        </div>
+        <div class = 'js-imgShow-btnBox'>
+          <div class="js-imgShow-btn" data-name = 'js-imgShow-selectBtn'>选择图片</div>
+          <div class="js-imgShow-btn">上传图片</div>
+        </div>
+    </div>
+    <div data-name = 'js-imgShow-preview'>
+      <canvas id = 'js-imgShow-canvas' width="100" height="100"></canvas>
+      <p data-name= 'js-imgShow-txt'>预览</p>
+    </div>
+    <input type="file" value= '上传图片' class='hidden' data-name = 'js-imgShow-file'>
+  </div>
+  <script src= './index.js'></script>
+</body>
+</html>
