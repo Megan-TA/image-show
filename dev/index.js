@@ -12,11 +12,24 @@ var sourcePathInfo = canvas2.getBoundingClientRect()
 var imgShow = document.querySelector('#js-imgShow')
 var selectBtn = document.querySelector('[data-name = js-imgShow-selectBtn]')
 var imgData = document.querySelector('[data-name = js-imgShow-file]')
+var uploadBtn = document.querySelector('#js-imgShow-upload')
+var proGressTxt = document.querySelector('[data-name="js-imgShow-proGressTxt"]')
+var processbar = document.querySelector('#processbar')
+
+var url = 'http://localhost:3000/upload'
 var flag = false  // 点击状态标记
 var W
 var H
 var startX
 var startY
+var finalFetchFormData
+
+function limitUploadType (data) {
+  var reg = /^image/
+  var flag = true
+  if (!reg.test(data.type)) flag = false
+  return flag
+}
 
 selectBtn.addEventListener('click', function (e) {
   imgData.click()
@@ -24,15 +37,33 @@ selectBtn.addEventListener('click', function (e) {
 
 imgData.addEventListener('change', function (e) {
   var files = e.target.files[0]
+  if (!limitUploadType(files)) {
+    alert('上传的文件类型不是图片哦！')
+    return
+  }
   formData.append('image', files)
   console.log(formData.getAll('image'))
   fileReader.readAsDataURL(files)
+  uploadBtn.className = 'js-imgShow-btn'
+  processbar.value = 0
+  proGressTxt.innerText = `上传进度：0%`
+  finalFetchFormData = formData
 }, false)
 
 fileReader.onload = function (e) {
   var url = e.target.result
   image.src = url
 }
+
+fileReader.onloadend = function (e) {
+  if (
+    image.width > 400 || image.height > 400
+  ) {
+    alert('图片宽高已超过最大400*400限制！')
+    image.src = ''
+  }
+}
+
 image.onload = function (e) {
   W = image.width
   H = image.height
@@ -74,5 +105,26 @@ canvas2.addEventListener('mouseup', function (e) {
   flag = false
   canvasCtx2.clearRect(0, 0, W, H)
   canvasCtx2.drawImage(image, 0, 0)
-  console.log('抬起')
+  canvas.toBlob(function (blob) {
+    formData = new FormData()
+    formData.append('image', blob)
+    finalFetchFormData = formData
+  })
 })
+
+uploadBtn.addEventListener('click', function (e) {
+  var ajax = new XMLHttpRequest()
+  ajax.open('post', url)
+  ajax.onprogress = function (progress) {
+    var progressNum = Number(progress.loaded / progress.total * 100)
+    processbar.value = progressNum
+    proGressTxt.innerText = `上传进度：${progressNum}%`
+  }
+  ajax.send(finalFetchFormData)
+  ajax.onreadystatechange = function () {
+    if (ajax.readyState === 4 && ajax.status === 200) {
+      var res = JSON.parse(ajax.responseText)
+      alert(res.result)
+    }
+  }
+}, false)

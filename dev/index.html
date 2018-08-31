@@ -32,6 +32,9 @@
       width: 40%;
       margin-top: 10px;
     }
+    .js-imgShow-btn.visible {
+      visibility: hidden;
+    }
     .js-imgShow-btn:first-child {
       border: 1px solid #71B3FF;
       border-radius: 4px;
@@ -66,6 +69,9 @@
     #js-imgShow-canvas {
       border: 1px dotted #000;
     }
+    .progress-content {
+      clear: both;
+    }
   </style>
 </head>
 <body>
@@ -78,12 +84,16 @@
         </div>
         <div class = 'js-imgShow-btnBox'>
           <div class="js-imgShow-btn" data-name = 'js-imgShow-selectBtn'>选择图片</div>
-          <div class="js-imgShow-btn">上传图片</div>
+          <div class="js-imgShow-btn visible" id = 'js-imgShow-upload'>上传图片</div>
         </div>
     </div>
     <div data-name = 'js-imgShow-preview'>
       <canvas id = 'js-imgShow-canvas' width="100" height="100"></canvas>
       <p data-name= 'js-imgShow-txt'>预览</p>
+    </div>
+    <div class = 'progress-content'>
+      <div data-name = 'js-imgShow-proGressTxt'>上传进度：0%</div>
+      <progress id="processbar" max="100" value="0">8</progress>
     </div>
     <input type="file" value= '上传图片' class='hidden' data-name = 'js-imgShow-file'>
   </div>
