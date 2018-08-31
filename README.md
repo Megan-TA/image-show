@@ -4,6 +4,23 @@
 
 上传图片后台测试时候基于`nodejs`的`express`框架
 
+启动步骤：
+
+1. 安装依赖
+
+```shell
+npm install
+```
+
+1. 切换到`dev`目录下
+
+```shell
+node app.js
+
+npm run dev
+
+```
+
 实现思路：
 
 1. 利用原生的`input`标签的`file`类型调用本地图片上传；
